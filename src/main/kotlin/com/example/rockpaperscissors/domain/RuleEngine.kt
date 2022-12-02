@@ -11,10 +11,10 @@ import org.apache.logging.log4j.kotlin.Logging
 class RuleEngine: Logging {
     operator fun invoke(computer: Player, playerOne: Player): Score {
         return if(computer.move == playerOne.move) {
-            logger.info("Computer moves: ${computer.move} and playerOne: ${playerOne.move}. Score was Draw")
+            logger.debug("Computer moves: ${computer.move} and playerOne: ${playerOne.move}. Score was Draw")
             return DRAW
         } else {
-            logger.info("No Draw. Computer moves: ${computer.move} and playerOne: ${playerOne.move}.")
+            logger.debug("No Draw. Computer moves: ${computer.move} and playerOne: ${playerOne.move}.")
             when(computer.move) {
                 ROCK -> if (playerOne.move == SCISSORS) return COMPUTER_WIN else PLAYER_ONE_WIN
                 PAPER -> if (playerOne.move == ROCK) return COMPUTER_WIN else PLAYER_ONE_WIN

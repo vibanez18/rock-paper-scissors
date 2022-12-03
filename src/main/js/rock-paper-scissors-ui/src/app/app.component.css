@@ -1,0 +1,27 @@
+.person1 svg.hand-scissors {
+  transform: scaleX(-1);
+}
+
+.person1 svg.hand-paper {
+  transform: rotate(90deg);
+}
+
+.person1 svg.hand-rock {
+  transform: rotate(90deg);
+}
+
+.person2 svg.hand-scissors {
+  /**/
+}
+
+.person2 svg.hand-paper {
+  transform: rotate(-90deg) scaleX(-1);;
+}
+
+.person2 svg.hand-rock {
+  transform: rotate(-90deg) scaleX(-1);;
+}
+
+.text-gold {
+  color: #c98917
+}

@@ -26,7 +26,6 @@ export class AppComponent  {
       playerOneMove: move.toUpperCase(),
       computerName: 'Super Computer'
     });
-    this.person = move;
   }
 
   playOnServer(game: Game) {
@@ -44,6 +43,7 @@ export class AppComponent  {
             // draw
         }
         this.computer = game.computerMove?.toLowerCase();
+        this.person = game.playerOneMove?.toLowerCase();
       },
       error: error => {
         // handle error

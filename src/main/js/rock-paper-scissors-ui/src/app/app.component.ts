@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {AppService} from './app.service';
+import {Game} from './game';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +10,8 @@ import { Component } from '@angular/core';
 export class AppComponent  {
   title = 'rock-paper-scissors-ui';
 
+  constructor(private appService: AppService) {}
+
   scores = {
     computer: 0,
     person: 0
@@ -16,40 +20,35 @@ export class AppComponent  {
   computer: any = false;
   person: any = false;
 
-  choices = ['rock', 'paper', 'scissors'];
-
-  random() {
-    return Math.floor(Math.random() * this.choices.length);
+  play(move: string) {
+    this.playOnServer({
+      playerOneName: 'Victor',
+      playerOneMove: move.toUpperCase(),
+      computerName: 'Super Computer'
+    });
+    this.person = move;
   }
 
-  play(answer: string) {
-    const computer = this.choices[this.random() | 0];
-    const match = computer + '_' + answer;
-    console.log('computer', computer);
-    switch(match) {
-      case 'rock_paper':
-      case 'paper_scissors':
-      case 'scissors_rock':
-        console.log('Computer loses!');
-        console.log('You win!');
-        this.scores.person++;
-        break;
-      case 'paper_rock':
-      case 'scissors_paper':
-      case 'rock_scissors':
-        console.log('Computer wins!');
-        console.log('You lose!');
-        this.scores.computer++;
-        break;
-      default:
-        console.log('Draw!');
-        this.scores.computer++;
-        this.scores.person++;
-    }
-
-    this.computer = computer;
-    this.person = answer;
-
+  playOnServer(game: Game) {
+    this.appService.play(game).subscribe({
+      next: game => {
+        // next
+        switch(game.score) {
+          case 'COMPUTER_WIN':
+            this.scores.computer++;
+            break
+          case 'PLAYER_ONE_WIN':
+            this.scores.person++;
+            break
+          default:
+            // draw
+        }
+        this.computer = game.computerMove?.toLowerCase();
+      },
+      error: error => {
+        // handle error
+      }
+    })
   }
 
   reset() {

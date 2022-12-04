@@ -21,13 +21,17 @@
       <svg [ngClass]="'icon text-gold hand-' + person" *ngIf="person">
         <use [attr.xlink:href]="'#hand-' + person"></use>
       </svg>
-      <span class="ml-8 font-bold">You</span>
+      <span class="ml-8 font-bold">{{personName}}</span>
     </div>
 
   </div>
 
   <div class="text-4xl font-bold uppercase text-center" *ngIf="!computer && !person">
     Rock... Paper...Scissors!
+  </div>
+
+  <div class="text-center" *ngIf="!computer && !person">
+      <label>Insert Name:</label><input type="text" [(ngModel)]="personName">
   </div>
 
 </div>

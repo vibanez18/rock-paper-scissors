@@ -19,12 +19,14 @@ export class AppComponent  {
 
   computer: any = false;
   person: any = false;
+  personName: string = "Player 1";
+  computerName: string = "Computer"
 
   play(move: string) {
     this.playOnServer({
-      playerOneName: 'Victor',
+      playerOneName: this.personName,
       playerOneMove: move.toUpperCase(),
-      computerName: 'Super Computer'
+      computerName: this.computerName
     });
   }
 

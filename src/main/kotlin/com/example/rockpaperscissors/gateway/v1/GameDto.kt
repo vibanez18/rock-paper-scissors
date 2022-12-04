@@ -9,7 +9,7 @@ data class GameDto(
         val playerOneName: String,
         @Schema(description = "Movement of player One", example = "ROCK")
         val playerOneMove: Move,
-        @Schema(description = "Name of computer", example = "By default Super Computer")
+        @Schema(description = "Name of computer", example = "Computer")
         val computerName: String? = null,
         @Schema(description = "Movement of computer", example = "PAPER")
         val computerMove: Move? = null,

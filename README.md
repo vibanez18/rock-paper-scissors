@@ -7,6 +7,13 @@ Small project based on the classic game rock, paper and scissors. The tech stack
 - Spring Boot 3
 
 ## How to run
+
+## Infrastructure
+
+Execute docker-compose image in docker folder
+
+    docker-compose up
+
 ### Frontend
 Execute the command in rock-paper-scissor-ui folder.
 

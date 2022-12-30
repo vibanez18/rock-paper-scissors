@@ -1,24 +1,23 @@
 package com.example.rockpaperscissors.domain
 
-import com.example.rockpaperscissors.domain.Move.ROCK
-import com.example.rockpaperscissors.domain.Move.PAPER
-import com.example.rockpaperscissors.domain.Move.SCISSORS
-import com.example.rockpaperscissors.domain.Score.DRAW
-import com.example.rockpaperscissors.domain.Score.COMPUTER_WIN
-import com.example.rockpaperscissors.domain.Score.PLAYER_ONE_WIN
+import com.example.rockpaperscissors.domain.model.Move
+import com.example.rockpaperscissors.domain.model.Move.*
+import com.example.rockpaperscissors.domain.model.Score
+import com.example.rockpaperscissors.domain.model.Score.*
 import org.apache.logging.log4j.kotlin.Logging
 
 class RuleEngine: Logging {
-    operator fun invoke(computer: Player, playerOne: Player): Score {
-        return if(computer.move == playerOne.move) {
-            logger.debug("Computer moves: ${computer.move} and playerOne: ${playerOne.move}. Score was Draw")
+    operator fun invoke(computerMove: Move, playerOneMove: Move): Score {
+        return if (computerMove.javaClass == playerOneMove.javaClass) {
+            logger.debug("Computer moves: ${computerMove.nameMove.name} and playerOne: ${playerOneMove.nameMove.name}. Score was Draw")
             return DRAW
         } else {
-            logger.debug("No Draw. Computer moves: ${computer.move} and playerOne: ${playerOne.move}.")
-            when(computer.move) {
-                ROCK -> if (playerOne.move == SCISSORS) return COMPUTER_WIN else PLAYER_ONE_WIN
-                PAPER -> if (playerOne.move == ROCK) return COMPUTER_WIN else PLAYER_ONE_WIN
-                SCISSORS -> if (playerOne.move == PAPER) return COMPUTER_WIN else PLAYER_ONE_WIN
+            logger.debug("No Draw. Computer moves: ${computerMove.nameMove.name} and playerOne: ${playerOneMove.nameMove.name}.")
+
+            when (computerMove) {
+                is Rock -> if (playerOneMove is Scissors) return COMPUTER_WIN else PLAYER_ONE_WIN
+                is Paper -> if (playerOneMove is Rock) return COMPUTER_WIN else PLAYER_ONE_WIN
+                is Scissors -> if (playerOneMove is Paper) return COMPUTER_WIN else PLAYER_ONE_WIN
             }
         }
     }

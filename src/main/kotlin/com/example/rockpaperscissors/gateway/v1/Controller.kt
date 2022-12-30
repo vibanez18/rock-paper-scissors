@@ -1,5 +1,6 @@
 package com.example.rockpaperscissors.gateway.v1
 
+import com.example.rockpaperscissors.application.GameDto
 import com.example.rockpaperscissors.application.GameService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content

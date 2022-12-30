@@ -3,6 +3,8 @@ package com.example.rockpaperscissors.application
 import io.swagger.v3.oas.annotations.media.Schema
 
 data class GameDto(
+        @Schema(description = "Id of the game", example = "1")
+        val id: Long? = null,
         @Schema(description = "Name of player one", example = "Bill")
         val playerOneName: String,
         @Schema(description = "Movement of player One", example = "ROCK")

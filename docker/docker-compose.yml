@@ -1,0 +1,13 @@
+version: "2"
+
+services:
+  postgres:
+    container_name: rock-paper-scissors
+    image: postgres:11.4
+    environment:
+      POSTGRES_USER: pg-user
+      POSTGRES_PASSWORD: pg-pass
+      POSTGRES_DB: ms_rock-paper-scissors
+
+    ports:
+      - "5432:5432"

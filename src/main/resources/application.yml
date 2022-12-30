@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url:  jdbc:postgresql://localhost:5432/ms_rock-paper-scissors
+    username: pg-user
+    password: pg-pass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: update

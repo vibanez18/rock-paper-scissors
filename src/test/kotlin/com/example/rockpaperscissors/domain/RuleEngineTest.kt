@@ -1,148 +1,57 @@
 package com.example.rockpaperscissors.domain
 
 import com.example.rockpaperscissors.domain.model.Move
-import com.example.rockpaperscissors.domain.model.Player
-import com.example.rockpaperscissors.domain.model.Score
-import com.example.rockpaperscissors.domain.model.Score.DRAW
+import com.example.rockpaperscissors.domain.model.Score.*
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.mock
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 
 class RuleEngineTest {
 
-    @Test
-    fun`when computer and playerOne move paper then score is draw` () {
-        val ruleEngine = RuleEngine()
-        val computerMock = mock<Player> {
-            on { move } doReturn Move.Paper()
-        }
-        val playerOneMock = mock<Player> {
-            on { move } doReturn Move.Paper()
-        }
+    companion object {
+        @JvmStatic
+        fun getDrawArguments(): List<Arguments> = listOf(
+            Arguments.of(Move.Paper(), Move.Paper()),
+            Arguments.of(Move.Rock(), Move.Rock()),
+            Arguments.of(Move.Scissors(), Move.Scissors())
+        )
 
-        val score = ruleEngine(computerMock.move, playerOneMock.move)
+        @JvmStatic
+        fun getWinnerArguments(): List<Arguments> = listOf(
+            Arguments.of(Move.Paper(), Move.Rock()),
+            Arguments.of(Move.Rock(), Move.Scissors()),
+            Arguments.of(Move.Scissors(), Move.Paper())
+        )
+    }
+
+    @ParameterizedTest
+    @MethodSource("getDrawArguments")
+    fun`when computer and playerOne move then is draw` (computerMove: Move, playerOneMove: Move) {
+        val ruleEngine = RuleEngine()
+
+        val score = ruleEngine(computerMove, playerOneMove)
 
         assertThat(score).isEqualTo(DRAW)
     }
 
-    @Test
-    fun`when computer and playerOne move rock then score is draw` () {
+    @ParameterizedTest
+    @MethodSource("getWinnerArguments")
+    fun`when computer and playerOne move then playerOne wins` (computerMove: Move, playerOneMove: Move) {
         val ruleEngine = RuleEngine()
-        val computerMock = mock<Player> {
-            on { move } doReturn Move.Rock()
-        }
-        val playerOneMock = mock<Player> {
-            on { move } doReturn Move.Rock()
-        }
 
-        val score = ruleEngine(computerMock.move, playerOneMock.move)
+        val score = ruleEngine(computerMove, playerOneMove)
 
-        assertThat(score).isEqualTo(DRAW)
+        assertThat(score).isEqualTo(COMPUTER_WIN)
     }
 
-    @Test
-    fun`when computer and playerOne move scissors then score is draw` () {
+    @ParameterizedTest
+    @MethodSource("getWinnerArguments")
+    fun`when computer and playerOne move then computer wins` (playerOne: Move, computerMove: Move) {
         val ruleEngine = RuleEngine()
-        val computerMock = mock<Player> {
-            on { move } doReturn Move.Scissors()
-        }
-        val playerOneMock = mock<Player> {
-            on { move } doReturn Move.Scissors()
-        }
 
-        val score = ruleEngine(computerMock.move, playerOneMock.move)
+        val score = ruleEngine(computerMove, playerOne)
 
-        assertThat(score).isEqualTo(DRAW)
-    }
-
-    @Test
-    fun`when computer moves paper and playerOne moves rock then computer wins` () {
-        val ruleEngine = RuleEngine()
-        val computerMock = mock<Player> {
-            on { move } doReturn Move.Paper()
-        }
-        val playerOneMock = mock<Player> {
-            on { move } doReturn Move.Rock()
-        }
-
-        val score = ruleEngine(computerMock.move, playerOneMock.move)
-
-        assertThat(score).isEqualTo(Score.COMPUTER_WIN)
-    }
-
-    @Test
-    fun`when computer moves paper and playerOne moves scissors then playerOne wins` () {
-        val ruleEngine = RuleEngine()
-        val computerMock = mock<Player> {
-            on { move } doReturn Move.Paper()
-        }
-        val playerOneMock = mock<Player> {
-            on { move } doReturn Move.Scissors()
-        }
-
-        val score = ruleEngine(computerMock.move, playerOneMock.move)
-
-        assertThat(score).isEqualTo(Score.PLAYER_ONE_WIN)
-    }
-
-    @Test
-    fun`when computer moves rock and playerOne moves scissors then computer wins` () {
-        val ruleEngine = RuleEngine()
-        val computerMock = mock<Player> {
-            on { move } doReturn Move.Rock()
-        }
-        val playerOneMock = mock<Player> {
-            on { move } doReturn Move.Scissors()
-        }
-
-        val score = ruleEngine(computerMock.move, playerOneMock.move)
-
-        assertThat(score).isEqualTo(Score.COMPUTER_WIN)
-    }
-
-    @Test
-    fun`when computer moves rock and playerOne moves paper then playerOne wins` () {
-        val ruleEngine = RuleEngine()
-        val computerMock = mock<Player> {
-            on { move } doReturn Move.Rock()
-        }
-        val playerOneMock = mock<Player> {
-            on { move } doReturn Move.Paper()
-        }
-
-        val score = ruleEngine(computerMock.move, playerOneMock.move)
-
-        assertThat(score).isEqualTo(Score.PLAYER_ONE_WIN)
-    }
-
-    @Test
-    fun`when computer moves scissors and playerOne moves paper then computer wins` () {
-        val ruleEngine = RuleEngine()
-        val computerMock = mock<Player> {
-            on { move } doReturn Move.Scissors()
-        }
-        val playerOneMock = mock<Player> {
-            on { move } doReturn Move.Paper()
-        }
-
-        val score = ruleEngine(computerMock.move, playerOneMock.move)
-
-        assertThat(score).isEqualTo(Score.COMPUTER_WIN)
-    }
-
-    @Test
-    fun`when computer moves scissors and playerOne moves rock then playerOne wins` () {
-        val ruleEngine = RuleEngine()
-        val computerMock = mock<Player> {
-            on { move } doReturn Move.Scissors()
-        }
-        val playerOneMock = mock<Player> {
-            on { move } doReturn Move.Rock()
-        }
-
-        val score = ruleEngine(computerMock.move, playerOneMock.move)
-
-        assertThat(score).isEqualTo(Score.PLAYER_ONE_WIN)
+        assertThat(score).isEqualTo(PLAYER_ONE_WIN)
     }
 }

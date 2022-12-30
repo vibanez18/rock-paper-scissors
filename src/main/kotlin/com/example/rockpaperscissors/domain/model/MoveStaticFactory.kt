@@ -1,12 +1,14 @@
 package com.example.rockpaperscissors.domain.model
 
+import com.example.rockpaperscissors.domain.model.MoveType.*
+
 class MoveStaticFactory private constructor() {
     companion object {
-        fun withRandomMove(): Move = this.withMoveType(MoveType.values().random())
+        fun withRandomMove(): Move = this.withMoveType(values().random())
         fun withMoveType(moveName: MoveType): Move = when(moveName) {
-            MoveType.ROCK -> Move.Rock()
-            MoveType.PAPER -> Move.Paper()
-            MoveType.SCISSORS -> Move.Scissors()
+            ROCK -> Move.Rock()
+            PAPER -> Move.Paper()
+            SCISSORS -> Move.Scissors()
         }
     }
 }

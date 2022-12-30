@@ -33,6 +33,8 @@ class GameService(
         return saveGame(player0ne, computer, score)
     }
 
+    fun receiveHistoricGames(): List<GameDto> = gameDomainRepository.finAllGames()
+        .map { gameMapper.toGameDto(it) }
     private fun saveGame(
         player0ne: Player,
         computer: Player,

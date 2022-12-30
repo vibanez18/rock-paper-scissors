@@ -59,6 +59,30 @@ class GameServiceTest {
         verify(gameMapper).toGameDto(any())
         verify(gameMapper).fromGameDto(any())
     }
+    @Test
+    fun `when receiveHistoricGames then return all games`() {
+        val historicGames = listOf(
+            mock<Game> {
+                on { id } doReturn 1
+                on { playerOneName } doReturn "playerOne"
+                on { playerOneMove } doReturn MoveStaticFactory.withMoveType(MoveType.ROCK)
+                on { computerName } doReturn "Computer"
+                on { computerMove } doReturn MoveStaticFactory.withMoveType(MoveType.ROCK)
+                on { score } doReturn Score.DRAW
+            }
+        )
+
+        whenever(gameDomainRepository.finAllGames()).thenReturn(historicGames)
+
+        val historicGamesDto = gameService.receiveHistoricGames()
+
+        assertThat(historicGamesDto)
+            .isNotEmpty
+            .hasSize(1)
+
+        verify(gameDomainRepository).finAllGames()
+        verify(gameMapper).toGameDto(any())
+    }
 
     @Test
     fun `when createAndExecuteGame with invalid movement then thrown exception`() {

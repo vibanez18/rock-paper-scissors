@@ -2,6 +2,7 @@ package com.example.rockpaperscissors.gateway.v1
 
 import com.example.rockpaperscissors.application.GameDto
 import com.example.rockpaperscissors.application.GameService
+import io.micrometer.core.annotation.Timed
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @CrossOrigin("http://localhost:4200")
+@Timed
 class Controller(val gameService: GameService) {
     @PostMapping("api/v1/start")
     @Operation(summary="Execute a new game", description = "Returns all the data of the game")
